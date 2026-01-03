@@ -1,0 +1,1444 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2 Star Car Wash - Admin Dashboard</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    * {
+      box-sizing: border-box;
+    }
+
+    .sidebar-link {
+      transition: all 0.2s;
+    }
+
+    .sidebar-link:hover {
+      background: #eff6ff;
+      border-left: 4px solid #3b82f6;
+    }
+
+    .sidebar-link.active {
+      background: #eff6ff;
+      border-left: 4px solid #dc2626;
+      color: #dc2626;
+    }
+
+    .stat-card {
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .action-btn {
+      transition: all 0.2s;
+    }
+
+    .action-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .mobile-menu {
+      transition: transform 0.3s ease-in-out;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+        position: fixed;
+        z-index: 40;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript" defer></script>
+  <script src="../js/config.js" defer></script>
+ </head>
+ <body class="h-full bg-gray-50">
+  <!-- Admin login modal -->
+  <div id="adminLoginModal" class="fixed inset-0 bg-black bg-opacity-40 hidden items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-xl w-full max-w-md mx-4 p-6">
+      <h3 class="text-lg font-bold mb-3">Admin Login</h3>
+      <div id="loginMsg" class="text-sm text-red-600 mb-2"></div>
+      <div class="grid gap-3">
+        <input id="loginUser" placeholder="Username" class="border px-3 py-2 rounded">
+        <input id="loginPass" placeholder="Password" type="password" class="border px-3 py-2 rounded">
+        <div class="flex justify-end gap-2">
+          <button class="px-4 py-2 rounded border" onclick="hideLoginModal()">Cancel</button>
+          <button class="px-4 py-2 bg-blue-600 text-white rounded" onclick="doLogin()">Sign in</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="h-full flex flex-col"><!-- Top Navbar -->
+   <nav class="bg-gradient-to-r from-red-600 to-blue-600 text-white shadow-lg">
+    <div class="w-full px-4 py-4">
+     <div class="flex justify-between items-center">
+      <div class="flex items-center gap-4"><button id="mobile-menu-btn" class="md:hidden text-white">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg></button>
+       <div class="flex items-center gap-3">
+        <div class="logo-img">
+         <img src="../Images/TWO STAR CAR WASH LOGO-1 (2)/TWO STAR CAR WASH LOGO-1-1.png" alt="TWO STAR CAR WASH Logo" class="w-14 h-14 rounded-full object-cover mr-3">
+        </div>
+        <div>
+         <h1 class="text-xl md:text-2xl font-bold">2 Star Car Wash &amp; Services</h1>
+         <p class="text-xs md:text-sm opacity-90">Admin Dashboard</p>
+        </div>
+       </div>
+      </div>
+      <div class="flex items-center gap-4">
+       <div class="hidden md:block text-right">
+        <p class="font-semibold">Admin / Manager</p>
+        <p class="text-xs opacity-90">administrator</p>
+       </div><button class="bg-white text-red-600 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition text-sm md:text-base" onclick="handleLogout()"> Logout </button>
+      </div>
+     </div>
+    </div>
+   </nav>
+   <div class="flex-1 flex overflow-hidden"><!-- Sidebar -->
+    <aside id="sidebar" class="sidebar w-64 bg-white shadow-lg overflow-y-auto">
+     <nav class="p-4"><button class="sidebar-link active w-full text-left px-4 py-3 rounded-lg mb-2 flex items-center gap-3" onclick="showSection('dashboard')"> <span class="text-xl">📊</span> <span class="font-semibold">Dashboard</span> </button> <button class="sidebar-link w-full text-left px-4 py-3 rounded-lg mb-2 flex items-center gap-3" onclick="showSection('bookings')"> <span class="text-xl">📅</span> <span class="font-semibold">Bookings</span> </button> <button class="sidebar-link w-full text-left px-4 py-3 rounded-lg mb-2 flex items-center gap-3" onclick="showSection('services')"> <span class="text-xl">🚗</span> <span class="font-semibold">Services</span> </button> <button class="sidebar-link w-full text-left px-4 py-3 rounded-lg mb-2 flex items-center gap-3" onclick="showSection('customers')"> <span class="text-xl">👥</span> <span class="font-semibold">Customers</span> </button> <button class="sidebar-link w-full text-left px-4 py-3 rounded-lg mb-2 flex items-center gap-3" onclick="showSection('payments')"> <span class="text-xl">💰</span> <span class="font-semibold">Payments</span> </button> <button class="sidebar-link w-full text-left px-4 py-3 rounded-lg mb-2 flex items-center gap-3" onclick="showSection('reports')"> <span class="text-xl">📈</span> <span class="font-semibold">Reports</span> </button> <button class="sidebar-link w-full text-left px-4 py-3 rounded-lg mb-2 flex items-center gap-3" onclick="showSection('settings')"> <span class="text-xl">⚙️</span> <span class="font-semibold">Settings</span> </button>
+     </nav>
+    </aside><!-- Main Content -->
+    <main class="flex-1 overflow-y-auto p-4 md:p-8"><!-- Dashboard Section -->
+     <section id="dashboard" class="section active">
+      <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6">Dashboard Overview</h2><!-- Summary Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
+       <div class="stat-card bg-white rounded-xl shadow p-6 border-l-4 border-blue-500">
+        <div class="flex items-center justify-between">
+         <div>
+          <p class="text-gray-600 text-sm mb-1">Total Bookings Today</p>
+          <p class="text-3xl font-bold text-blue-600" id="bookingsToday">0</p>
+         </div>
+         <div class="text-4xl">
+          📅
+         </div>
+        </div>
+       </div>
+       <div class="stat-card bg-white rounded-xl shadow p-6 border-l-4 border-yellow-500">
+        <div class="flex items-center justify-between">
+         <div>
+          <p class="text-gray-600 text-sm mb-1">Pending Bookings</p>
+          <p class="text-3xl font-bold text-yellow-600" id="pendingCount">0</p>
+         </div>
+         <div class="text-4xl">
+          ⏳
+         </div>
+        </div>
+       </div>
+       <div class="stat-card bg-white rounded-xl shadow p-6 border-l-4 border-green-500">
+        <div class="flex items-center justify-between">
+         <div>
+          <p class="text-gray-600 text-sm mb-1">Completed Services</p>
+          <p class="text-3xl font-bold text-green-600" id="completedCount">0</p>
+         </div>
+         <div class="text-4xl">
+          ✅
+         </div>
+        </div>
+       </div>
+       <div class="stat-card bg-white rounded-xl shadow p-6 border-l-4 border-red-500">
+        <div class="flex items-center justify-between">
+         <div>
+          <p class="text-gray-600 text-sm mb-1">Total Revenue</p>
+          <p class="text-3xl font-bold text-red-600" id="totalRevenue">TZS 0</p>
+         </div>
+         <div class="text-4xl">
+          💰
+         </div>
+        </div>
+       </div>
+      </div><!-- Recent Bookings -->
+      <div class="bg-white rounded-xl shadow overflow-hidden">
+       <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+        <h3 class="text-xl font-bold text-gray-800">Recent Bookings</h3><button class="text-blue-600 hover:text-blue-800 font-semibold text-sm" onclick="showSection('bookings')">View All →</button>
+       </div>
+       <div class="overflow-x-auto">
+        <table class="w-full">
+         <thead class="bg-gray-50">
+          <tr>
+           <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Customer</th>
+           <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Service</th>
+           <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Time</th>
+           <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase">Status</th>
+          </tr>
+         </thead>
+         <tbody id="recentBookingsBody" class="divide-y divide-gray-200">
+          <tr><td colspan="4" class="px-6 py-4">Loading…</td></tr>
+         </tbody>
+        </table>
+       </div>
+      </div>
+     </section><!-- Bookings Section -->
+     <section id="bookings" class="section hidden">
+      <div class="flex justify-between items-center mb-6">
+       <h2 class="text-2xl md:text-3xl font-bold text-gray-800">Bookings Management</h2><button id="openAddBookingBtn" class="bg-gradient-to-r from-red-600 to-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:shadow-lg transition"> + New Booking </button>
+      </div>
+
+      <!-- Add Booking Modal (hidden by default) -->
+      <div id="addBookingModal" class="fixed inset-0 bg-black/50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
+          <h3 class="text-lg font-semibold mb-4">Add Booking</h3>
+          <form id="addBookingForm">
+            <div class="mb-3"><label class="block text-sm font-semibold">Name</label><input name="name" class="w-full border px-3 py-2 rounded" required></div>
+            <div class="mb-3"><label class="block text-sm font-semibold">Phone</label><input name="phone" class="w-full border px-3 py-2 rounded"></div>
+            <div class="mb-3"><label class="block text-sm font-semibold">Car Model</label><input name="car_model" class="w-full border px-3 py-2 rounded"></div>
+            <div class="mb-3"><label class="block text-sm font-semibold">Service</label><select id="adminServiceSelect" name="service" class="w-full border px-3 py-2 rounded" required></select></div>
+            <div class="grid grid-cols-2 gap-3 mb-3">
+              <div><label class="block text-sm font-semibold">Date</label><input type="date" name="booking_date" class="w-full border px-3 py-2 rounded" required></div>
+              <div><label class="block text-sm font-semibold">Time</label><input type="time" name="time" class="w-full border px-3 py-2 rounded"></div>
+            </div>
+            <div class="flex justify-end gap-2">
+              <button type="button" id="cancelAddBooking" class="px-3 py-1">Cancel</button>
+              <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Create</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="bg-white rounded-xl shadow overflow-hidden">
+       <div class="overflow-x-auto">
+        <table id="customersTable" class="w-full">
+         <thead class="bg-gradient-to-r from-red-600 to-blue-600 text-white">
+          <tr>
+           <th class="px-6 py-4 text-left text-xs font-semibold uppercase">ID</th>
+           <th class="px-6 py-4 text-left text-xs font-semibold uppercase">Customer Name</th>
+           <th class="px-6 py-4 text-left text-xs font-semibold uppercase">Phone</th>
+           <th class="px-6 py-4 text-left text-xs font-semibold uppercase">Car Model</th>
+           <th class="px-6 py-4 text-left text-xs font-semibold uppercase">Service</th>
+           <th class="px-6 py-4 text-left text-xs font-semibold uppercase">Date &amp; Time</th>
+           <th class="px-6 py-4 text-left text-xs font-semibold uppercase">Status</th>
+           <th class="px-6 py-4 text-left text-xs font-semibold uppercase">Actions</th>
+          </tr>
+         </thead>
+         <tbody id="bookingsTableBody" class="divide-y divide-gray-200">
+          <tr><td colspan="8" class="px-6 py-4">Loading…</td></tr>
+         </tbody>
+        </table>
+       </div>
+      </div>
+     </section><!-- Services Section -->
+    <!-- Reports Section -->
+    <section id="reports" class="section hidden">
+      <h2 class="text-2xl font-bold mb-4">Reports</h2>
+
+      <!-- Filters -->
+      <div class="flex flex-wrap gap-4 mb-6">
+        <input type="date" id="fromDate" class="border p-2 rounded">
+        <input type="date" id="toDate" class="border p-2 rounded">
+
+        <select id="reportType" class="border p-2 rounded">
+          <option value="daily">Daily</option>
+          <option value="weekly">Weekly</option>
+          <option value="monthly">Monthly</option>
+        </select>
+
+        <button onclick="generateReport()" class="bg-blue-600 text-white px-4 py-2 rounded">
+          Generate Report
+        </button>
+      </div>
+
+      <!-- Summary Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div class="bg-white shadow rounded p-4">
+          <p class="text-gray-500">Total Bookings</p>
+          <h3 id="totalBookings" class="text-2xl font-bold">0</h3>
+        </div>
+
+        <div class="bg-white shadow rounded p-4">
+          <p class="text-gray-500">Completed Services</p>
+          <h3 id="completedServices" class="text-2xl font-bold">0</h3>
+        </div>
+
+        <div class="bg-white shadow rounded p-4">
+          <p class="text-gray-500">Total Revenue (TZS)</p>
+          <h3 id="totalRevenue" class="text-2xl font-bold">0</h3>
+        </div>
+      </div>
+
+      <!-- Export -->
+      <div class="flex gap-3">
+        <button onclick="exportReport('pdf')" class="bg-red-600 text-white px-4 py-2 rounded">
+          Export PDF
+        </button>
+        <button onclick="exportReport('excel')" class="bg-green-600 text-white px-4 py-2 rounded">
+          Export Excel
+        </button>
+      </div>
+    </section>
+    <script>
+      // Admin services management JS
+      async function loadAdminServices(){
+        const listEl = document.getElementById('servicesList');
+        const msg = document.getElementById('adminServicesMsg');
+        listEl.innerHTML = '<div class="col-span-full">Loading…</div>';
+        try{
+          const res = await fetch('/api/get_services.php');
+          const services = await res.json();
+          if(!Array.isArray(services)) throw new Error('Invalid data');
+          if(services.length === 0){
+            listEl.innerHTML = '<div class="col-span-full">No services found.</div>';
+            return;
+          }
+          listEl.innerHTML = services.map(s => {
+            return `
+              <div class="bg-white rounded-xl shadow p-6 hover:shadow-lg transition">
+                <div class="flex items-center gap-4 mb-4">
+                  <div class="text-3xl">🚗</div>
+                  <div>
+                    <h4 class="text-lg font-bold">${escapeHtml(s.name)}</h4>
+                    <p class="text-blue-600 font-bold">TZS ${Number(s.price).toLocaleString()}</p>
+                  </div>
+                </div>
+                <p class="text-gray-600 mb-4">Duration: ${escapeHtml(String(s.duration))} min</p>
+                <div class="flex gap-2">
+                  <button onclick="startEditService(${s.id}, ${JSON.stringify(s.name)}, ${s.price}, ${s.duration})" class="flex-1 bg-blue-500 text-white px-4 py-2 rounded">Edit</button>
+                  <button onclick="deleteService(${s.id})" class="flex-1 bg-red-500 text-white px-4 py-2 rounded">Delete</button>
+                </div>
+              </div>
+            `;
+          }).join('\n');
+        }catch(err){
+          console.error(err);
+          msg.textContent = 'Failed to load services';
+          listEl.innerHTML = '<div class="col-span-full">Failed to load services.</div>';
+        }
+      }
+
+      function escapeHtml(str){
+        return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\"/g,'&quot;').replace(/'/g,'&#039;');
+      }
+
+      function showAddServiceForm(){
+        document.getElementById('serviceFormTitle').textContent = 'Add Service';
+        document.getElementById('serviceAction').value = 'add';
+        document.getElementById('serviceId').value = '';
+        document.getElementById('serviceName').value = '';
+        document.getElementById('servicePrice').value = '';
+        document.getElementById('serviceDuration').value = '';
+        document.getElementById('serviceFormMsg').textContent = '';
+        document.getElementById('serviceAdminPanel').classList.remove('hidden');
+        window.scrollTo({top:0, behavior:'smooth'});
+      }
+
+      function hideAddServiceForm(){
+        document.getElementById('serviceAdminPanel').classList.add('hidden');
+      }
+
+      function startEditService(id, name, price, duration){
+        document.getElementById('serviceFormTitle').textContent = 'Edit Service';
+        document.getElementById('serviceAction').value = 'update';
+        document.getElementById('serviceId').value = id;
+        document.getElementById('serviceName').value = name;
+        document.getElementById('servicePrice').value = price;
+        document.getElementById('serviceDuration').value = duration;
+        document.getElementById('serviceFormMsg').textContent = '';
+        document.getElementById('serviceAdminPanel').classList.remove('hidden');
+        window.scrollTo({top:0, behavior:'smooth'});
+      }
+
+      async function deleteService(id){
+        if(!confirm('Delete this service?')) return;
+        try{
+          const form = new FormData();
+          form.append('action','update');
+          form.append('id', id);
+          form.append('name','');
+          form.append('price',0);
+          form.append('duration',0);
+          // We will perform a soft delete by setting name to empty — replace with real delete later.
+          const res = await fetch('/api/manage_service.php',{method:'POST', body: form});
+          const data = await res.json();
+          if(data && data.success){
+            await loadAdminServices();
+            document.getElementById('adminServicesMsg').textContent = 'Service updated.';
+          } else {
+            document.getElementById('adminServicesMsg').textContent = data.message || 'Failed to delete service';
+          }
+        }catch(err){
+          console.error(err);
+          document.getElementById('adminServicesMsg').textContent = 'Server error';
+        }
+      }
+
+      // submit handler
+      document.addEventListener('DOMContentLoaded', function(){
+        const frm = document.getElementById('serviceForm');
+        frm.addEventListener('submit', async function(e){
+          e.preventDefault();
+          const msg = document.getElementById('serviceFormMsg');
+          msg.textContent = '';
+          const formData = new FormData(frm);
+          // admin_key is handled server-side; do not expose it to client
+          try{
+            const res = await fetch('/api/manage_service.php',{method:'POST', body: formData});
+            const data = await res.json();
+            if(data && data.success){
+              msg.textContent = 'Saved.';
+              await loadAdminServices();
+              setTimeout(()=>{ hideAddServiceForm(); }, 800);
+            } else {
+              msg.textContent = data.message || 'Save failed.';
+            }
+          }catch(err){
+            console.error(err);
+            msg.textContent = 'Server error.';
+          }
+        });
+
+        // load services initially
+        loadAdminServices();
+      });
+    </script>
+     <section id="services" class="section hidden">
+      <div class="flex justify-between items-center mb-6">
+       <h2 class="text-2xl md:text-3xl font-bold text-gray-800">Services Management</h2><button class="bg-gradient-to-r from-red-600 to-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:shadow-lg transition" onclick="showAddServiceForm()"> + Add Service </button>
+      </div>
+        <!-- Admin add/update form (hidden by default) -->
+        <div id="serviceAdminPanel" class="bg-white rounded-xl shadow p-6 mb-6 hidden">
+          <h3 class="text-lg font-bold mb-4" id="serviceFormTitle">Add Service</h3>
+          <div id="serviceFormMsg" class="mb-3 text-sm"></div>
+          <form id="serviceForm" class="grid grid-cols-1 md:grid-cols-3 gap-3 items-end">
+            <input type="hidden" name="id" id="serviceId">
+            <div>
+              <label class="block text-sm font-semibold">Name</label>
+              <input name="name" id="serviceName" class="w-full border px-3 py-2 rounded" required>
+            </div>
+            <div>
+              <label class="block text-sm font-semibold">Price (TZS)</label>
+              <input name="price" id="servicePrice" type="number" class="w-full border px-3 py-2 rounded" required>
+            </div>
+            <div>
+              <label class="block text-sm font-semibold">Duration (min)</label>
+              <input name="duration" id="serviceDuration" type="number" class="w-full border px-3 py-2 rounded" required>
+            </div>
+            <div class="md:col-span-3 flex gap-2 justify-end mt-2">
+              <input type="hidden" name="action" id="serviceAction" value="add">
+              <button type="button" onclick="hideAddServiceForm()" class="px-4 py-2 rounded border">Cancel</button>
+              <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Save</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Services list rendered from API -->
+        <div class="bg-white rounded-xl shadow p-6 mb-6">
+          <h3 class="text-lg font-semibold mb-4">Current Services</h3>
+          <div id="adminServicesMsg" class="mb-3 text-sm"></div>
+          <div id="servicesList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- service cards will be injected here -->
+          </div>
+        </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+       <div class="bg-white rounded-xl shadow p-6 hover:shadow-lg transition">
+        <div class="flex items-center gap-4 mb-4">
+         <div class="text-4xl">
+          💧
+         </div>
+         <div>
+          <h3 class="text-xl font-bold text-gray-800">Basic Wash</h3>
+          <p class="text-2xl font-bold text-blue-600">TZS 15,000</p>
+         </div>
+        </div>
+        <p class="text-gray-600 mb-4">Exterior wash, tire cleaning, and drying</p>
+        <div class="flex gap-2"><button class="action-btn flex-1 bg-blue-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-600" onclick="editService('basic')">Edit</button> <button class="action-btn flex-1 bg-red-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-red-600" onclick="deleteService('basic')">Delete</button>
+        </div>
+       </div>
+       <div class="bg-white rounded-xl shadow p-6 hover:shadow-lg transition">
+        <div class="flex items-center gap-4 mb-4">
+         <div class="text-4xl">
+          ✨
+         </div>
+         <div>
+          <h3 class="text-xl font-bold text-gray-800">Premium Wash</h3>
+          <p class="text-2xl font-bold text-blue-600">TZS 30,000</p>
+         </div>
+        </div>
+        <p class="text-gray-600 mb-4">Full wash, wax, tire shine, and interior vacuum</p>
+        <div class="flex gap-2"><button class="action-btn flex-1 bg-blue-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-600" onclick="editService('premium')">Edit</button> <button class="action-btn flex-1 bg-red-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-red-600" onclick="deleteService('premium')">Delete</button>
+        </div>
+       </div>
+       <div class="bg-white rounded-xl shadow p-6 hover:shadow-lg transition">
+        <div class="flex items-center gap-4 mb-4">
+         <div class="text-4xl">
+          🌟
+         </div>
+         <div>
+          <h3 class="text-xl font-bold text-gray-800">Full Detailing</h3>
+          <p class="text-2xl font-bold text-blue-600">TZS 50,000</p>
+         </div>
+        </div>
+        <p class="text-gray-600 mb-4">Complete interior &amp; exterior detailing</p>
+        <div class="flex gap-2"><button class="action-btn flex-1 bg-blue-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-600" onclick="editService('detailing')">Edit</button> <button class="action-btn flex-1 bg-red-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-red-600" onclick="deleteService('detailing')">Delete</button>
+        </div>
+       </div>
+       <div class="bg-white rounded-xl shadow p-6 hover:shadow-lg transition">
+        <div class="flex items-center gap-4 mb-4">
+         <div class="text-4xl">
+          🧼
+         </div>
+         <div>
+          <h3 class="text-xl font-bold text-gray-800">Interior Cleaning</h3>
+          <p class="text-2xl font-bold text-blue-600">TZS 35,000</p>
+         </div>
+        </div>
+        <p class="text-gray-600 mb-4">Deep interior cleaning, shampooing, and odor removal</p>
+        <div class="flex gap-2"><button class="action-btn flex-1 bg-blue-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-600" onclick="editService('interior')">Edit</button> <button class="action-btn flex-1 bg-red-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-red-600" onclick="deleteService('interior')">Delete</button>
+        </div>
+       </div>
+       <div class="bg-white rounded-xl shadow p-6 hover:shadow-lg transition">
+        <div class="flex items-center gap-4 mb-4">
+         <div class="text-4xl">
+          🔧
+         </div>
+         <div>
+          <h3 class="text-xl font-bold text-gray-800">Engine Cleaning</h3>
+          <p class="text-2xl font-bold text-blue-600">TZS 25,000</p>
+         </div>
+        </div>
+        <p class="text-gray-600 mb-4">Engine bay degreasing and cleaning</p>
+        <div class="flex gap-2"><button class="action-btn flex-1 bg-blue-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-600" onclick="editService('engine')">Edit</button> <button class="action-btn flex-1 bg-red-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-red-600" onclick="deleteService('engine')">Delete</button>
+        </div>
+       </div>
+       <div class="bg-white rounded-xl shadow p-6 hover:shadow-lg transition">
+        <div class="flex items-center gap-4 mb-4">
+         <div class="text-4xl">
+          🛡️
+         </div>
+         <div>
+          <h3 class="text-xl font-bold text-gray-800">Ceramic Coating</h3>
+          <p class="text-2xl font-bold text-blue-600">TZS 200,000</p>
+         </div>
+        </div>
+        <p class="text-gray-600 mb-4">Premium paint protection with ceramic coating</p>
+        <div class="flex gap-2"><button class="action-btn flex-1 bg-blue-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-600" onclick="editService('ceramic')">Edit</button> <button class="action-btn flex-1 bg-red-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-red-600" onclick="deleteService('ceramic')">Delete</button>
+        </div>
+       </div>
+      </div>
+     </section><!-- Customers Section -->
+    <!-- Settings Section -->
+    <section id="settings" class="section hidden">
+      <h2 class="text-2xl font-bold mb-4">Settings</h2>
+
+      <div class="bg-white shadow rounded p-6 max-w-xl">
+        <form onsubmit="saveSettings(event)">
+          
+          <label class="block mb-2 font-semibold">Business Name</label>
+          <input type="text" id="businessName"
+            value="2 Star Car Wash & Services"
+            class="border p-2 w-full rounded mb-4">
+
+          <label class="block mb-2 font-semibold">Phone Number</label>
+          <input type="text" id="phoneNumber"
+            value="+255"
+            class="border p-2 w-full rounded mb-4">
+
+          <label class="block mb-2 font-semibold">Currency</label>
+          <select id="currency" class="border p-2 w-full rounded mb-4">
+            <option value="TZS">TZS</option>
+          </select>
+
+          <label class="flex items-center gap-2 mb-4">
+            <input type="checkbox" id="notifications" checked>
+            Enable booking notifications
+          </label>
+
+          <button type="submit"
+            class="bg-blue-600 text-white px-4 py-2 rounded">
+            Save Settings
+          </button>
+        </form>
+      </div>
+    </section>
+     <section id="customers" class="section hidden">
+      <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6">Customers Management</h2>
+      <div class="bg-white rounded-xl shadow overflow-hidden">
+       <div class="overflow-x-auto">
+        <table class="w-full">
+         <thead class="bg-gradient-to-r from-red-600 to-blue-600 text-white">
+          <tr>
+           <th class="px-6 py-4 text-left text-xs font-semibold uppercase">Customer ID</th>
+           <th class="px-6 py-4 text-left text-xs font-semibold uppercase">Name</th>
+           <th class="px-6 py-4 text-left text-xs font-semibold uppercase">Phone Number</th>
+           <th class="px-6 py-4 text-left text-xs font-semibold uppercase">Car Model</th>
+           <th class="px-6 py-4 text-left text-xs font-semibold uppercase">Total Bookings</th>
+           <th class="px-6 py-4 text-left text-xs font-semibold uppercase">Last Visit</th>
+           <th class="px-6 py-4 text-left text-xs font-semibold uppercase">Actions</th>
+          </tr>
+         </thead>
+         <tbody id="customersTableBody" class="divide-y divide-gray-200">
+           <tr class="hover:bg-gray-50"><td class="px-6 py-4" colspan="7">Loading customers…</td></tr>
+         </tbody>
+        </table>
+       </div>
+      </div>
+     </section><!-- Payments Section -->
+     <section id="payments" class="section hidden">
+      <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6">Payments Management</h2>
+      <div class="bg-white rounded-xl shadow overflow-hidden">
+       <div class="overflow-x-auto">
+        <table class="w-full">
+         <thead class="bg-gradient-to-r from-red-600 to-blue-600 text-white">
+          <tr>
+           <th class="px-6 py-4 text-left text-xs font-semibold uppercase">Payment ID</th>
+           <th class="px-6 py-4 text-left text-xs font-semibold uppercase">Customer</th>
+           <th class="px-6 py-4 text-left text-xs font-semibold uppercase">Service</th>
+           <th class="px-6 py-4 text-left text-xs font-semibold uppercase">Amount (TZS)</th>
+           <th class="px-6 py-4 text-left text-xs font-semibold uppercase">Payment Method</th>
+           <th class="px-6 py-4 text-left text-xs font-semibold uppercase">Date</th>
+           <th class="px-6 py-4 text-left text-xs font-semibold uppercase">Status</th>
+          </tr>
+         </thead>
+         <tbody class="divide-y divide-gray-200">
+          <tr class="hover:bg-gray-50">
+           <td class="px-6 py-4 font-semibold text-gray-800">#P001</td>
+           <td class="px-6 py-4 text-gray-800">John Mwangi</td>
+           <td class="px-6 py-4 text-gray-800">Premium Wash</td>
+           <td class="px-6 py-4 text-gray-800 font-bold">30,000</td>
+           <td class="px-6 py-4">
+            <div class="flex items-center gap-2"><span class="text-lg">📱</span> <span class="text-gray-800">M-Pesa</span>
+            </div></td>
+           <td class="px-6 py-4 text-gray-600">Dec 20, 2024</td>
+           <td class="px-6 py-4"><span class="px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800">Pending</span></td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+           <td class="px-6 py-4 font-semibold text-gray-800">#P002</td>
+           <td class="px-6 py-4 text-gray-800">Sarah Kimani</td>
+           <td class="px-6 py-4 text-gray-800">Interior Cleaning</td>
+           <td class="px-6 py-4 text-gray-800 font-bold">35,000</td>
+           <td class="px-6 py-4">
+            <div class="flex items-center gap-2"><span class="text-lg">💳</span> <span class="text-gray-800">TigoPesa</span>
+            </div></td>
+           <td class="px-6 py-4 text-gray-600">Dec 20, 2024</td>
+           <td class="px-6 py-4"><span class="px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">Paid</span></td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+           <td class="px-6 py-4 font-semibold text-gray-800">#P003</td>
+           <td class="px-6 py-4 text-gray-800">David Mtui</td>
+           <td class="px-6 py-4 text-gray-800">Full Detailing</td>
+           <td class="px-6 py-4 text-gray-800 font-bold">50,000</td>
+           <td class="px-6 py-4">
+            <div class="flex items-center gap-2"><span class="text-lg">💰</span> <span class="text-gray-800">Cash</span>
+            </div></td>
+           <td class="px-6 py-4 text-gray-600">Dec 19, 2024</td>
+           <td class="px-6 py-4"><span class="px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">Paid</span></td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+           <td class="px-6 py-4 font-semibold text-gray-800">#P004</td>
+           <td class="px-6 py-4 text-gray-800">Mary Njeri</td>
+           <td class="px-6 py-4 text-gray-800">Basic Wash</td>
+           <td class="px-6 py-4 text-gray-800 font-bold">15,000</td>
+           <td class="px-6 py-4">
+            <div class="flex items-center gap-2"><span class="text-lg">📱</span> <span class="text-gray-800">Airtel Money</span>
+            </div></td>
+           <td class="px-6 py-4 text-gray-600">Dec 18, 2024</td>
+           <td class="px-6 py-4"><span class="px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">Paid</span></td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+           <td class="px-6 py-4 font-semibold text-gray-800">#P005</td>
+           <td class="px-6 py-4 text-gray-800">James Kiprono</td>
+           <td class="px-6 py-4 text-gray-800">Engine Cleaning</td>
+           <td class="px-6 py-4 text-gray-800 font-bold">25,000</td>
+           <td class="px-6 py-4">
+            <div class="flex items-center gap-2"><span class="text-lg">📱</span> <span class="text-gray-800">M-Pesa</span>
+            </div></td>
+           <td class="px-6 py-4 text-gray-600">Dec 17, 2024</td>
+           <td class="px-6 py-4"><span class="px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800">Pending</span></td>
+          </tr>
+         </tbody>
+        </table>
+       </div>
+      </div>
+     </section>
+    </main>
+   </div>
+  </div><!-- Toast Notification -->
+  <!-- Customer Details Modal -->
+  <div id="customerModal" class="fixed inset-0 bg-black bg-opacity-40 hidden items-center justify-center z-50">
+    <div class="bg-white rounded-lg shadow-xl w-full max-w-3xl mx-4 overflow-auto" style="max-height:80vh">
+      <div class="p-4 border-b flex justify-between items-center">
+        <h3 class="text-lg font-bold" id="customerModalTitle">Customer Details</h3>
+        <button onclick="closeCustomerModal()" class="text-gray-600 hover:text-gray-900">✕</button>
+      </div>
+      <div class="p-4" id="customerModalBody">
+        <div id="customerSummary" class="mb-4">
+          <!-- customer summary will be injected here -->
+        </div>
+
+        <div id="customerEditArea" class="mb-4">
+          <h4 class="font-semibold mb-2">Edit Customer</h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <input type="hidden" id="custId">
+            <div>
+              <label class="block text-xs font-semibold">Name</label>
+              <input id="custName" class="w-full border px-3 py-2 rounded">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold">Phone</label>
+              <input id="custPhone" class="w-full border px-3 py-2 rounded">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold">Car Model</label>
+              <input id="custCar" class="w-full border px-3 py-2 rounded">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold">VIP</label>
+              <select id="custVip" class="w-full border px-3 py-2 rounded"><option value="0">No</option><option value="1">Yes</option></select>
+            </div>
+            <div class="md:col-span-2">
+              <label class="block text-xs font-semibold">Notes</label>
+              <textarea id="custNotes" class="w-full border px-3 py-2 rounded" rows="3"></textarea>
+            </div>
+          </div>
+          <div class="mt-3 flex justify-end gap-2">
+            <button class="px-4 py-2 rounded border" onclick="closeCustomerModal()">Cancel</button>
+            <button class="px-4 py-2 bg-blue-600 text-white rounded" onclick="saveCustomer()">Save</button>
+            <button class="px-4 py-2 bg-red-600 text-white rounded" onclick="softDeleteCustomer()">Soft Delete</button>
+          </div>
+        </div>
+
+        <div id="customerBookingsArea">
+          <h4 class="font-semibold mb-2">Booking History</h4>
+          <div id="customerBookingsTable" class="overflow-auto">
+            <!-- booking table injected here -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="fixed bottom-4 right-4 bg-gray-800 text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-32 transition-transform duration-300"><span id="toast-message">Action completed successfully!</span>
+  </div>
+  <script>
+    // ensure global defaultConfig exists and avoid redeclaration
+    if (typeof window.defaultConfig === 'undefined') {
+      window.defaultConfig = {
+        primary_color: "#3b82f6",
+        secondary_color: "#dc2626",
+        background_color: "#f9fafb",
+        text_color: "#1f2937",
+        accent_color: "#10b981",
+        font_family: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto",
+        font_size: 16,
+        business_name: "2 Star Car Wash & Services",
+        admin_name: "Admin / Manager",
+        currency: "TZS"
+      };
+    }
+
+    let config = { ...(window.defaultConfig || {}) };
+
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const sidebar = document.getElementById('sidebar');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+    });
+
+    // Close sidebar when clicking outside on mobile
+    document.addEventListener('click', (e) => {
+      if (window.innerWidth < 768 && 
+          !sidebar.contains(e.target) && 
+          !mobileMenuBtn.contains(e.target)) {
+        sidebar.classList.remove('open');
+      }
+    });
+
+    function showSection(sectionId) {
+      const sections = document.querySelectorAll('.section');
+      const navLinks = document.querySelectorAll('.sidebar-link');
+      
+      sections.forEach(section => section.classList.add('hidden'));
+      document.getElementById(sectionId).classList.remove('hidden');
+      
+      navLinks.forEach(link => link.classList.remove('active'));
+      const activeLink = Array.from(navLinks).find(link => 
+        link.textContent.toLowerCase().includes(sectionId)
+      );
+      if (activeLink) activeLink.classList.add('active');
+
+      // Close mobile menu
+      if (window.innerWidth < 768) {
+        sidebar.classList.remove('open');
+      }
+    }
+
+    // make it available globally for inline onclick handlers
+    window.showSection = showSection;
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toast-message');
+      toastMessage.textContent = message;
+      toast.style.transform = 'translateY(0)';
+      setTimeout(() => {
+        toast.style.transform = 'translateY(8rem)';
+      }, 3000);
+    }
+
+    function handleLogout() {
+      showToast('Logging out...');
+      setTimeout(() => {
+        showToast('Logged out successfully!');
+      }, 1000);
+    }
+
+    function viewBooking(id) {
+      showToast(`Viewing booking #${id}`);
+    }
+
+    function confirmBooking(id) {
+      showToast(`Booking #${id} confirmed!`);
+    }
+
+    function completeBooking(id) {
+      showToast(`Booking #${id} marked as completed!`);
+    }
+
+    function deleteBooking(id) {
+      showToast(`Booking #${id} deleted`);
+    }
+
+    function showAddBookingForm() {
+      showToast('Opening new booking form...');
+    }
+
+    function showAddServiceForm() {
+      showToast('Opening add service form...');
+    }
+
+    function editService(serviceId) {
+      showToast(`Editing ${serviceId} service...`);
+    }
+
+    function deleteService(serviceId) {
+      showToast(`Service ${serviceId} deleted`);
+    }
+
+    async function viewCustomer(id) {
+      // id may be like 'C001' in UI samples; attempt numeric extraction
+      let numericId = null;
+      if (typeof id === 'string' && /^C?0*\d+$/i.test(id)) {
+        numericId = id.replace(/^C/i, '').replace(/^0+/, '');
+      } else if (typeof id === 'number') {
+        numericId = id;
+      }
+
+      const params = numericId ? `?id=${encodeURIComponent(numericId)}` : `?phone=${encodeURIComponent(id)}`;
+      try {
+        const res = await fetch(`customer_details.php${params}`);
+        const data = await res.json();
+        if (!data.success) {
+          showToast('Customer not found');
+          return;
+        }
+
+        const customer = data.customer || {};
+        const bookings = data.bookings || [];
+        const totals = data.totals || {};
+
+        // Populate summary
+        const summary = document.getElementById('customerSummary');
+        summary.innerHTML = `<div class="flex items-center justify-between">
+            <div>
+              <h4 class="text-lg font-bold">${escapeHtml(customer.name || 'Unknown')}</h4>
+              <div class="text-sm text-gray-600">Phone: ${escapeHtml(customer.phone || '')}</div>
+              <div class="text-sm text-gray-600">Car: ${escapeHtml(customer.car_model || '')}</div>
+            </div>
+            <div class="text-right">
+              <div class="text-sm">Visits: <strong>${totals.count || 0}</strong></div>
+              <div class="text-sm">Last Visit: <strong>${escapeHtml(totals.last_visit || '')}</strong></div>
+              <div class="text-sm">Total Spent: <strong>${(totals.total_spent || 0).toLocaleString()}</strong> ${config.currency || 'TZS'}</div>
+            </div>
+          </div>`;
+
+        // Fill edit form
+        document.getElementById('custId').value = customer.id || '';
+        document.getElementById('custName').value = customer.name || '';
+        document.getElementById('custPhone').value = customer.phone || '';
+        document.getElementById('custCar').value = customer.car_model || '';
+        document.getElementById('custNotes').value = customer.notes || '';
+        document.getElementById('custVip').value = customer.is_vip ? '1' : '0';
+
+        // Render bookings
+        const bookingsContainer = document.getElementById('customerBookingsTable');
+        if (bookings.length === 0) {
+          bookingsContainer.innerHTML = '<div class="text-sm text-gray-600">No bookings found for this customer.</div>';
+        } else {
+          let html = '<table class="w-full text-sm">';
+          html += '<thead class="text-left text-xs font-semibold text-gray-700"><tr><th class="p-2">Date</th><th class="p-2">Time</th><th class="p-2">Service</th><th class="p-2">Price</th><th class="p-2">Status</th></tr></thead><tbody>';
+          bookings.forEach(b => {
+            html += `<tr class="border-t"><td class="p-2">${escapeHtml(b.date)}</td><td class="p-2">${escapeHtml(b.time)}</td><td class="p-2">${escapeHtml(b.service)}</td><td class="p-2">${Number(b.price || 0).toLocaleString()}</td><td class="p-2">${escapeHtml(b.status || '')}</td></tr>`;
+          });
+          html += '</tbody></table>';
+          bookingsContainer.innerHTML = html;
+        }
+
+        // Show modal
+        document.getElementById('customerModal').classList.remove('hidden');
+        document.getElementById('customerModal').classList.add('flex');
+      } catch (err) {
+        console.error(err);
+        showToast('Error fetching customer');
+      }
+    }
+
+    function closeCustomerModal() {
+      const modal = document.getElementById('customerModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    async function saveCustomer() {
+      const payload = {
+        id: document.getElementById('custId').value || null,
+        name: document.getElementById('custName').value || '',
+        phone: document.getElementById('custPhone').value || '',
+        car_model: document.getElementById('custCar').value || '',
+        notes: document.getElementById('custNotes').value || '',
+        is_vip: Number(document.getElementById('custVip').value || 0)
+      };
+      try {
+        const res = await fetch('update_customer.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast('Customer saved');
+          closeCustomerModal();
+        } else {
+          showToast('Save failed');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Error saving customer');
+      }
+    }
+
+    async function softDeleteCustomer() {
+      if (!confirm('Mark customer as deleted (soft delete)?')) return;
+      const id = document.getElementById('custId').value || null;
+      if (!id) {
+        showToast('Cannot delete customer without ID');
+        return;
+      }
+      try {
+        const res = await fetch('update_customer.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: id, is_deleted: 1 })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast('Customer marked deleted');
+          closeCustomerModal();
+        } else {
+          showToast('Delete failed');
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Error deleting customer');
+      }
+    }
+
+    // Load customers into table
+    async function loadCustomers() {
+      try {
+        const res = await fetch('/api/customer_details.php');
+        const data = await res.json();
+        const tbody = document.getElementById('customersTableBody');
+        if (!Array.isArray(data)) {
+          tbody.innerHTML = '<tr><td class="px-6 py-4" colspan="7">No customers found</td></tr>';
+          return;
+        }
+        tbody.innerHTML = '';
+        data.forEach(c => {
+          const idDisplay = c.id && c.id > 0 ? `#${String(c.id).padStart(3,'0')}` : c.phone;
+          const lastVisit = c.last_visit ? c.last_visit : '-';
+          const total = c.total_bookings || 0;
+          const row = document.createElement('tr');
+          row.className = 'hover:bg-gray-50';
+          row.setAttribute('data-customer-id', c.id || c.phone);
+          row.innerHTML = `
+            <td class="px-6 py-4 font-semibold text-gray-800">${escapeHtml(idDisplay)}</td>
+            <td class="px-6 py-4 text-gray-800">${escapeHtml(c.name || '')}</td>
+            <td class="px-6 py-4 text-gray-600">${escapeHtml(c.phone || '')}</td>
+            <td class="px-6 py-4 text-gray-800">${escapeHtml(c.car_model || '')}</td>
+            <td class="px-6 py-4"><span class="px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">${total} visits</span></td>
+            <td class="px-6 py-4 text-gray-600">${escapeHtml(lastVisit)}</td>
+            <td class="px-6 py-4"><button class="action-btn bg-blue-500 text-white px-3 py-1 rounded text-xs font-semibold hover:bg-blue-600" onclick="viewCustomer('${escapeHtml(c.id && c.id>0 ? c.id : c.phone)}')">View Details</button></td>
+          `;
+          tbody.appendChild(row);
+        });
+      } catch (err) {
+        console.error(err);
+        const tbody = document.getElementById('customersTableBody');
+        tbody.innerHTML = '<tr><td class="px-6 py-4" colspan="7">Failed to load customers</td></tr>';
+      }
+    }
+
+    // Load customers on script load
+    loadCustomers();
+
+    function saveSettings() {
+      showToast('Settings saved successfully!');
+    }
+
+    function editHours() {
+      showToast('Opening hours editor...');
+    }
+
+    async function onConfigChange(newConfig) {
+      const baseFont = newConfig.font_family || window.defaultConfig.font_family;
+      const baseFontSize = newConfig.font_size || window.defaultConfig.font_size;
+      const baseFontStack = ", -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+      
+      document.body.style.fontFamily = `${baseFont}${baseFontStack}`;
+      document.body.style.fontSize = `${baseFontSize}px`;
+      
+      const navbar = document.querySelector('nav');
+      if (navbar) {
+        navbar.style.background = `linear-gradient(to right, ${newConfig.secondary_color || window.defaultConfig.secondary_color}, ${newConfig.primary_color || window.defaultConfig.primary_color})`;
+      }
+      
+      const businessNameElements = document.querySelectorAll('h1');
+      businessNameElements.forEach(el => {
+        if (el.textContent.includes('Star')) {
+          el.textContent = newConfig.business_name || window.defaultConfig.business_name;
+          el.style.fontSize = `${baseFontSize * 1.5}px`;
+        }
+      });
+      
+      const adminNameElements = document.querySelectorAll('p');
+      adminNameElements.forEach(el => {
+        if (el.textContent.includes('Admin') || el.textContent.includes('Manager')) {
+          el.textContent = newConfig.admin_name || window.defaultConfig.admin_name;
+        }
+      });
+      
+      const currencyElements = document.querySelectorAll('p, span, td');
+      currencyElements.forEach(el => {
+        if (el.textContent.includes('TZS')) {
+          el.textContent = el.textContent.replace(/TZS/g, newConfig.currency || window.defaultConfig.currency);
+        }
+      });
+      
+      const primaryButtons = document.querySelectorAll('.bg-gradient-to-r');
+      primaryButtons.forEach(btn => {
+        btn.style.background = `linear-gradient(to right, ${newConfig.secondary_color || window.defaultConfig.secondary_color}, ${newConfig.primary_color || window.defaultConfig.primary_color})`;
+      });
+      
+      const tableHeaders = document.querySelectorAll('thead');
+      tableHeaders.forEach(header => {
+        header.style.background = `linear-gradient(to right, ${newConfig.secondary_color || window.defaultConfig.secondary_color}, ${newConfig.primary_color || window.defaultConfig.primary_color})`;
+      });
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig: window.defaultConfig,
+        onConfigChange,
+        mapToCapabilities: (config) => ({
+          recolorables: [
+            {
+              get: () => config.background_color || window.defaultConfig.background_color,
+              set: (value) => {
+                config.background_color = value;
+                window.elementSdk.setConfig({ background_color: value });
+              }
+            },
+            {
+              get: () => config.primary_color || window.defaultConfig.primary_color,
+              set: (value) => {
+                config.primary_color = value;
+                window.elementSdk.setConfig({ primary_color: value });
+              }
+            },
+            {
+              get: () => config.secondary_color || window.defaultConfig.secondary_color,
+              set: (value) => {
+                config.secondary_color = value;
+                window.elementSdk.setConfig({ secondary_color: value });
+              }
+            },
+            {
+              get: () => config.text_color || window.defaultConfig.text_color,
+              set: (value) => {
+                config.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              }
+            },
+            {
+              get: () => config.accent_color || window.defaultConfig.accent_color,
+              set: (value) => {
+                config.accent_color = value;
+                window.elementSdk.setConfig({ accent_color: value });
+              }
+            }
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => config.font_family || window.defaultConfig.font_family,
+            set: (value) => {
+              config.font_family = value;
+              window.elementSdk.setConfig({ font_family: value });
+            }
+          },
+          fontSizeable: {
+            get: () => config.font_size || window.defaultConfig.font_size,
+            set: (value) => {
+              config.font_size = value;
+              window.elementSdk.setConfig({ font_size: value });
+            }
+          }
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ["business_name", config.business_name || window.defaultConfig.business_name],
+          ["admin_name", config.admin_name || window.defaultConfig.admin_name],
+          ["currency", config.currency || window.defaultConfig.currency]
+        ])
+      });
+      
+      if (window.elementSdk.config) {
+        config = { ...defaultConfig, ...window.elementSdk.config };
+        onConfigChange(config);
+      }
+    }
+
+    // --- Bookings: fetch & render ---
+    async function fetchBookings(){
+      const recentBody = document.getElementById('recentBookingsBody');
+      const tableBody = document.getElementById('bookingsTableBody');
+
+      recentBody.innerHTML = '<tr><td colspan="4" class="px-6 py-4">Loading…</td></tr>';
+      tableBody.innerHTML = '<tr><td colspan="8" class="px-6 py-4">Loading…</td></tr>';
+
+      try{
+          const res = await fetch('../api/bookings.php?fetch=1');
+        if(!res.ok) throw new Error('Network response was not ok');
+        const bookings = await res.json();
+
+        // if API returned an object (error) instead of an array, handle gracefully
+        if (!Array.isArray(bookings)) {
+          console.warn('Expected bookings array, got:', bookings);
+          const errMsg = (bookings && bookings.message) ? bookings.message : 'Unexpected response from server';
+          recentBody.innerHTML = `<tr><td colspan="4" class="px-6 py-4">${escapeHtml(errMsg)}</td></tr>`;
+          tableBody.innerHTML = `<tr><td colspan="8" class="px-6 py-4">${escapeHtml(errMsg)}</td></tr>`;
+          showToast(errMsg);
+          return;
+        }
+
+        // Dashboard summary
+        const today = new Date().toISOString().split('T')[0];
+        const bookingsToday = bookings.filter(b => b.booking_date === today).length;
+        document.getElementById('bookingsToday').textContent = bookingsToday;
+        document.getElementById('pendingCount').textContent = bookings.filter(b => (b.status || 'pending') === 'pending').length;
+        document.getElementById('completedCount').textContent = bookings.filter(b => (b.status || 'pending') === 'completed').length;
+        document.getElementById('totalRevenue').textContent = (bookings.reduce((sum, b) => sum + Number(b.amount || 0), 0)).toLocaleString() + ' ' + (config.currency || 'TZS');
+
+        // Recent bookings
+        const recent = bookings.slice(0,3);
+        if(recent.length === 0){
+          recentBody.innerHTML = '<tr><td colspan="4" class="px-6 py-4">No bookings yet</td></tr>';
+        } else {
+          recentBody.innerHTML = recent.map(b => `
+            <tr class="hover:bg-gray-50">
+              <td class="px-6 py-4">
+                <div>
+                  <p class="font-semibold text-gray-800">${escapeHtml(b.name || '')}</p>
+                  <p class="text-sm text-gray-600">${escapeHtml(b.phone || '')}</p>
+                </div>
+              </td>
+              <td class="px-6 py-4 text-gray-800">${escapeHtml(b.service || '')}</td>
+              <td class="px-6 py-4 text-gray-600">${escapeHtml(b.booking_time || '')}</td>
+              <td class="px-6 py-4">${statusBadge(b.status || 'pending')}</td>
+            </tr>
+          `).join('');
+        }
+
+        // Full bookings table
+        if(!bookings || bookings.length === 0){
+          tableBody.innerHTML = '<tr><td colspan="8" class="px-6 py-4">No bookings yet</td></tr>';
+        } else {
+          tableBody.innerHTML = bookings.map(b => `
+            <tr class="hover:bg-gray-50">
+              <td class="px-6 py-4 font-semibold text-gray-800">#${b.id}</td>
+              <td class="px-6 py-4 text-gray-800">${escapeHtml(b.name || '')}</td>
+              <td class="px-6 py-4 text-gray-600">${escapeHtml(b.phone || '')}</td>
+              <td class="px-6 py-4 text-gray-800">${escapeHtml(b.car_model || '')}</td>
+              <td class="px-6 py-4 text-gray-800">${escapeHtml(b.service || '')}</td>
+              <td class="px-6 py-4 text-gray-600">${escapeHtml(b.booking_date || '')} - ${escapeHtml(b.booking_time || '')}</td>
+              <td class="px-6 py-4">${statusBadge(b.status || 'pending')}</td>
+              <td class="px-6 py-4">
+                <div class="flex gap-2">
+                  <button class="action-btn bg-blue-500 text-white px-3 py-1 rounded text-xs font-semibold hover:bg-blue-600" onclick="viewBooking('${b.id}')">View</button>
+                  <button class="action-btn bg-green-500 text-white px-3 py-1 rounded text-xs font-semibold hover:bg-green-600" onclick="confirmBooking('${b.id}')">Confirm</button>
+                  <button class="action-btn bg-red-500 text-white px-3 py-1 rounded text-xs font-semibold hover:bg-red-600" onclick="deleteBooking('${b.id}')">Delete</button>
+                </div>
+              </td>
+            </tr>
+          `).join('');
+        }
+
+      }catch(err){
+        recentBody.innerHTML = '<tr><td colspan="4" class="px-6 py-4">Failed to load bookings</td></tr>';
+        document.getElementById('bookingsTableBody').innerHTML = '<tr><td colspan="8" class="px-6 py-4">Failed to load bookings</td></tr>';
+        console.error(err);
+        showToast('Failed to load bookings');
+      }
+    }
+
+    function statusBadge(status){
+      status = (status || '').toLowerCase();
+      if(status === 'completed') return '<span class="px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">Completed</span>';
+      if(status === 'confirmed') return '<span class="px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">Confirmed</span>';
+      return '<span class="px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800">Pending</span>';
+    }
+
+    // reuse escapeHtml from above
+    function escapeHtml(str){
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // action handlers (currently client-side only; can be wired to API later)
+    function viewBooking(id){
+      showToast(`Viewing booking #${id}`);
+    }
+    async function confirmBooking(id){
+      try{
+        const res = await fetch('update_booking_status.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: Number(id), status: 'Confirmed' })
+        });
+        const data = await res.json();
+        if(data && data.success){
+          showToast(`Booking #${id} confirmed`);
+          fetchBookings();
+        } else {
+          showToast(data.message || 'Failed to confirm');
+        }
+      }catch(err){
+        console.error(err);
+        showToast('Server error');
+      }
+    }
+
+    async function deleteBooking(id){
+      if(!confirm('Mark booking as Cancelled?')) return;
+      try{
+        const res = await fetch('update_booking_status.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: Number(id), status: 'Cancelled' })
+        });
+        const data = await res.json();
+        if(data && data.success){
+          showToast(`Booking #${id} cancelled`);
+          fetchBookings();
+        } else {
+          showToast(data.message || 'Failed to cancel');
+        }
+      }catch(err){
+        console.error(err);
+        showToast('Server error');
+      }
+    }
+
+    // Add Booking modal handlers
+    document.getElementById('openAddBookingBtn').addEventListener('click', () => {
+      document.getElementById('addBookingModal').classList.remove('hidden');
+    });
+    document.getElementById('cancelAddBooking').addEventListener('click', () => {
+      document.getElementById('addBookingModal').classList.add('hidden');
+    });
+    document.getElementById('addBookingForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.currentTarget;
+      const fd = new FormData(form);
+
+      try {
+        const res = await fetch('../api/booking.php', { method: 'POST', body: fd });
+        const text = await res.text();
+        let data;
+        try { data = JSON.parse(text); } catch (err) { throw new Error('Invalid JSON from server'); }
+
+        if (!res.ok) {
+          const errMsg = data && data.message ? data.message : `Server error ${res.status}`;
+          showToast(errMsg);
+          return;
+        }
+
+        if (data && data.success) {
+          showToast('Booking created');
+          document.getElementById('addBookingModal').classList.add('hidden');
+          form.reset();
+          fetchBookings();
+        } else {
+          const errMsg = data && (data.message || (data.errors ? (Array.isArray(data.errors) ? data.errors.join('; ') : data.errors) : 'Failed'));
+          showToast(errMsg);
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Failed to create booking: ' + (err.message || 'Network error'));
+      }
+    });
+
+    // initialize
+    function populateAdminServices(){
+      const sel = document.getElementById('adminServiceSelect');
+      if(!sel) return;
+      const services = (window.SERVICES && window.SERVICES.slice()) || [];
+      if(services.length === 0 && window.SERVICE_PRICES){
+        Object.keys(window.SERVICE_PRICES).forEach(k=> services.push({ value: k, label: `${k} - TZS ${window.SERVICE_PRICES[k]}`, price: window.SERVICE_PRICES[k] }));
+      }
+      sel.innerHTML = services.map(s => `<option value="${escapeHtml(s.value)}">${escapeHtml(s.label || s.value + (s.price ? ' - TZS ' + s.price : ''))}</option>`).join('');
+    }
+
+    window.addEventListener('load', () => {
+      checkAuth().then(isAdmin => {
+        if (!isAdmin) {
+          // show login modal
+          showLoginModal();
+          return;
+        }
+        populateAdminServices();
+        fetchBookings();
+        // refresh bookings every 60s
+        setInterval(fetchBookings, 60000);
+        // initial customer load and periodic refresh
+        loadCustomers();
+        setInterval(loadCustomers, 10000);
+      });
+    });
+
+    // Simple admin fetch for compatibility: loads bookings from Admin/fetchBookings.php
+    async function loadBookings() {
+      try {
+        const res = await fetch('fetchBookings.php');
+        const data = await res.json();
+
+        if(!data.success) {
+          console.error("Expected bookings array, got:", data);
+          return;
+        }
+
+        const table = document.getElementById('bookingsTableBody');
+        table.innerHTML = "";
+
+        data.bookings.forEach(b => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${b.id}</td>
+            <td>${b.name}</td>
+            <td>${b.phone}</td>
+            <td>${b.car_model}</td>
+            <td>${b.service}</td>
+            <td>${b.date} ${b.time}</td>
+            <td>${b.status}</td>
+          `;
+          table.appendChild(tr);
+        });
+
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    // Auto-refresh every 10s
+    setInterval(loadBookings, 10000);
+    loadBookings();
+
+    // --- Reports: Demo generate/export functions ---
+    function generateReport() {
+      // Demo data (baadaye uta-connect DB)
+      document.getElementById("totalBookings").innerText = 42;
+      document.getElementById("completedServices").innerText = 35;
+      document.getElementById("totalRevenue").innerText = "1,250,000";
+
+      alert("Report generated successfully 📊");
+    }
+
+    function exportReport(type) {
+      alert(type.toUpperCase() + " report exported 📄");
+    }
+
+    // --- Settings: save handler ---
+    function saveSettings(e) {
+      e.preventDefault();
+
+      const settings = {
+        businessName: document.getElementById("businessName").value,
+        phone: document.getElementById("phoneNumber").value,
+        currency: document.getElementById("currency").value,
+        notifications: document.getElementById("notifications").checked
+      };
+
+
+    // ---- Auth helpers ----
+    function showLoginModal(){
+      document.getElementById('adminLoginModal').classList.remove('hidden');
+      document.getElementById('adminLoginModal').classList.add('flex');
+    }
+    function hideLoginModal(){
+      document.getElementById('adminLoginModal').classList.add('hidden');
+      document.getElementById('adminLoginModal').classList.remove('flex');
+    }
+    async function doLogin(){
+      const user = document.getElementById('loginUser').value;
+      const pass = document.getElementById('loginPass').value;
+      const msg = document.getElementById('loginMsg');
+      msg.textContent = '';
+      try{
+        const res = await fetch('login.php',{method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({username:user,password:pass})});
+        const data = await res.json();
+        if (data && data.success) {
+          hideLoginModal();
+          // load admin data
+          populateAdminServices();
+          fetchBookings();
+          loadCustomers();
+        } else {
+          msg.textContent = data.message || 'Invalid credentials';
+        }
+      }catch(err){
+        console.error(err);
+        msg.textContent = 'Server error';
+      }
+    }
+
+    async function checkAuth(){
+      try{
+        const res = await fetch('check_auth.php');
+        const data = await res.json();
+        return !!data.is_admin;
+      }catch(err){
+        return false;
+      }
+    }
+      console.log("Saved settings:", settings);
+      alert("Settings saved successfully ⚙️");
+    }
+  </script>
+ </body>
+</html>

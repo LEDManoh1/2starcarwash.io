@@ -1,0 +1,825 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="css/style.css">
+  <title>2 Star Car Wash &amp; Services</title>
+  <script src="/_sdk/data_sdk.js" defer></script>
+  <script src="/_sdk/element_sdk.js" defer></script>
+  <script src="js/config.js" defer></script>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript" defer></script>
+ </head>
+ <body>
+  <div class="page-wrapper"><!-- Navigation -->
+   <nav class="nav">
+    <div class="nav-logo">
+     <svg width="50" height="50" viewbox="0 0 100 100"><!-- Cloud with rain --> <ellipse cx="40" cy="30" rx="20" ry="12" fill="#3b82f6" opacity="0.6" /> <ellipse cx="55" cy="28" rx="18" ry="11" fill="#60a5fa" opacity="0.7" /> <line x1="35" y1="42" x2="35" y2="52" stroke="#3b82f6" stroke-width="2" opacity="0.5" /> <line x1="45" y1="42" x2="45" y2="52" stroke="#3b82f6" stroke-width="2" opacity="0.5" /> <line x1="55" y1="42" x2="55" y2="52" stroke="#3b82f6" stroke-width="2" opacity="0.5" /> <!-- Metallic star --> <defs>
+       <lineargradient id="metalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#cbd5e1" />
+        <stop offset="50%" style="stop-color:#f8fafc" />
+        <stop offset="100%" style="stop-color:#94a3b8" />
+       </lineargradient>
+      </defs> <polygon points="50,60 55,72 68,72 58,80 62,92 50,84 38,92 42,80 32,72 45,72" fill="url(#metalGrad)" stroke="#64748b" stroke-width="1.5" /> <!-- Red and blue swoosh --> <path d="M 10 70 Q 30 65, 50 70 T 90 70" stroke="#ef4444" stroke-width="3" fill="none" opacity="0.8" /> <path d="M 15 80 Q 35 75, 55 80 T 95 80" stroke="#3b82f6" stroke-width="3" fill="none" opacity="0.8" />
+     </svg><span style="font-size: 1.2rem; font-weight: 700;" id="nav-company-name">2 Star Car Wash</span>
+    </div>
+    <div class="nav-links"><a href="#services" class="nav-link">Services</a> <a href="#booking" class="nav-link">Book Now</a> <a href="#gallery" class="nav-link">Gallery</a> <a href="#contact" class="nav-link">Contact</a>
+    </div>
+   </nav><!-- Hero Section -->
+   <section class="hero">
+    <div class="hero-content">
+     <div class="logo-container">
+      <svg width="80" height="80" viewbox="0 0 100 100"><ellipse cx="40" cy="30" rx="20" ry="12" fill="#3b82f6" opacity="0.6" /> <ellipse cx="55" cy="28" rx="18" ry="11" fill="#60a5fa" opacity="0.7" /> <line x1="35" y1="42" x2="35" y2="52" stroke="#3b82f6" stroke-width="2" opacity="0.5" /> <line x1="45" y1="42" x2="45" y2="52" stroke="#3b82f6" stroke-width="2" opacity="0.5" /> <line x1="55" y1="42" x2="55" y2="52" stroke="#3b82f6" stroke-width="2" opacity="0.5" /> <defs>
+        <lineargradient id="metalGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+         <stop offset="0%" style="stop-color:#cbd5e1" />
+         <stop offset="50%" style="stop-color:#f8fafc" />
+         <stop offset="100%" style="stop-color:#94a3b8" />
+        </lineargradient>
+       </defs> <polygon points="50,60 55,72 68,72 58,80 62,92 50,84 38,92 42,80 32,72 45,72" fill="url(#metalGrad2)" stroke="#64748b" stroke-width="1.5" /> <path d="M 10 70 Q 30 65, 50 70 T 90 70" stroke="#ef4444" stroke-width="3" fill="none" opacity="0.8" /> <path d="M 15 80 Q 35 75, 55 80 T 95 80" stroke="#3b82f6" stroke-width="3" fill="none" opacity="0.8" />
+      </svg>
+      <div>
+       <h2 style="margin: 0; font-size: 1.8rem;" id="hero-company-name">2 Star Car Wash &amp; Services</h2>
+      </div>
+     </div>
+     <div class="hero-logo-banner" aria-hidden="true">
+       <img src="Images/TWO STAR CAR WASH LOGO-1 (2)/TWO STAR CAR WASH LOGO-1-1.png" alt="TWO STAR CAR WASH Logo" />
+       <div class="banner-text">Trusted Quality — TWO STAR CAR WASH</div>
+     </div>
+     <h1 id="hero-tagline">Professional Car Wash &amp; Auto Care in Tanzania</h1>
+     <div class="hero-buttons"><a href="#booking" class="btn-primary">Book Now</a> <a href="#services" class="btn-secondary">View Services</a>
+     </div>
+    </div>
+   </section><!-- Top Services -->
+   <section class="top-services">
+    <h2 class="section-title" id="top-services-title">Our Premium Services</h2>
+    <div class="services-grid">
+     <div class="service-card">
+      <div class="service-icon">
+       🚗
+      </div>
+      <h3>Full Body Wash</h3>
+      <p>Complete exterior cleaning with premium soap and hand drying for a sparkling finish</p>
+      <div class="price service-price" data-service="Full Body Wash">TZS <span class="price-amount">15,000</span></div>
+      <button class="btn-primary" onclick="scrollToBooking('Full Body Wash')">Book Now</button>
+     </div>
+     <div class="service-card">
+      <div class="service-icon">
+       ✨
+      </div>
+      <h3>Premium Package</h3>
+      <p>Full wash, interior vacuum, wax polish, and tire shine - the complete care experience</p>
+      <div class="price service-price" data-service="Premium Package">TZS <span class="price-amount">35,000</span></div>
+      <button class="btn-primary" onclick="scrollToBooking('Premium Package')">Book Now</button>
+     </div>
+     <div class="service-card">
+      <div class="service-icon">
+       💺
+      </div>
+      <h3>Interior Detailing</h3>
+      <p>Deep cleaning of seats, carpets, dashboard, and all interior surfaces</p>
+      <div class="price service-price" data-service="Interior Detailing">TZS <span class="price-amount">25,000</span></div>
+      <button class="btn-primary" onclick="scrollToBooking('Interior Detailing')">Book Now</button>
+     </div>
+    </div>
+   </section><!-- All Services -->
+   <section class="all-services" id="services">
+    <h2 class="section-title" id="all-services-title">Complete Service List</h2>
+    <div class="all-services-grid">
+     <div class="compact-service-card">
+      <h4>🧽 Exterior Wash</h4>
+      <p>Basic exterior wash with quality soap and rinse</p>
+      <div class="service-footer"><span class="price service-price" data-service="Exterior Wash" style="font-size: 1.3rem;">TZS <span class="price-amount">10,000</span></span> <button class="btn-small" onclick="scrollToBooking('Exterior Wash')">Book</button>
+      </div>
+     </div>
+     <div class="compact-service-card">
+      <h4>🔧 Engine Wash</h4>
+      <p>Safe engine bay cleaning and degreasing</p>
+      <div class="service-footer"><span class="price service-price" data-service="Engine Wash" style="font-size: 1.3rem;">TZS <span class="price-amount">20,000</span></span> <button class="btn-small" onclick="scrollToBooking('Engine Wash')">Book</button>
+      </div>
+     </div>
+     <div class="compact-service-card">
+      <h4>🌀 Interior Vacuum</h4>
+      <p>Thorough vacuuming of all interior surfaces</p>
+      <div class="service-footer"><span class="price service-price" data-service="Interior Vacuum" style="font-size: 1.3rem;">TZS <span class="price-amount">12,000</span></span> <button class="btn-small" onclick="scrollToBooking('Interior Vacuum')">Book</button>
+      </div>
+     </div>
+     <div class="compact-service-card">
+      <h4>💺 Seat Cleaning</h4>
+      <p>Deep fabric or leather seat cleaning and conditioning</p>
+      <div class="service-footer"><span class="price service-price" data-service="Seat Cleaning" style="font-size: 1.3rem;">TZS <span class="price-amount">18,000</span></span> <button class="btn-small" onclick="scrollToBooking('Seat Cleaning')">Book</button>
+      </div>
+     </div>
+     <div class="compact-service-card">
+      <h4>⬇️ Underbody Wash</h4>
+      <p>Complete underbody cleaning and rust prevention</p>
+      <div class="service-footer"><span class="price service-price" data-service="Underbody Wash" style="font-size: 1.3rem;">TZS <span class="price-amount">15,000</span></span> <button class="btn-small" onclick="scrollToBooking('Underbody Wash')">Book</button>
+      </div>
+     </div>
+     <div class="compact-service-card">
+      <h4>💎 Wax &amp; Polish</h4>
+      <p>Professional waxing for long-lasting shine and protection</p>
+      <div class="service-footer"><span class="price service-price" data-service="Wax &amp; Polish" style="font-size: 1.3rem;">TZS <span class="price-amount">22,000</span></span> <button class="btn-small" onclick="scrollToBooking('Wax &amp; Polish')">Book</button>
+      </div>
+     </div>
+    </div>
+   </section><!-- Booking Section -->
+   <section class="booking-section" id="booking">
+    <h2 class="section-title" id="booking-title">Book Your Service</h2>
+    <div class="booking-container">
+     <form id="bookingForm" method="POST" action="api/booking.php">
+      <div class="form-group"><label for="name">Full Name</label> <input type="text" id="name" name="name" required placeholder="Enter your full name">
+      </div>
+      <div class="form-group"><label for="phone">Phone Number</label> <input type="tel" id="phone" name="phone" required placeholder="+255 123 456 789">
+      </div>
+      <div class="form-group"><label for="carModel">Car Model</label> <input type="text" id="carModel" name="car_model" required placeholder="e.g., Toyota Corolla 2020">
+      </div>
+      <div class="form-group"><label for="serviceSelect">Select Service</label>
+        <select name="service" id="serviceSelect" required class="border p-2 w-full">
+          <option value="">Select Service</option>
+        </select>
+      </div>
+      </div>
+      <div class="form-row">
+      <div class="form-group"><label for="date">Preferred Date</label> <input type="date" id="date" name="booking_date" required>
+       </div>
+       <div class="form-group"><label for="time">Preferred Time</label> <input type="time" id="time" name="time" required>
+       </div>
+      </div><button type="submit" class="submit-btn" id="submitBtn">Confirm Booking</button>
+      <div class="success-message" id="successMessage">
+       ✅ Booking confirmed! We'll contact you shortly to confirm your appointment.
+      </div>
+     </form>
+    </div>
+   </section><!-- Gallery Section -->
+   <section class="gallery-section" id="gallery">
+    <h2 class="section-title" id="gallery-title">Our Work</h2>
+    <div class="gallery-grid">
+    <div class="gallery-item"><span class="gallery-label">BEFORE</span>
+     <img src="Images/BEFORE__ Dusty, muddy exterior with water spots and dirt buildup__AFTER_✨ Sparkling clean, showroom shine with mirror-like finish__BEFORE__ Stained seats with dust and debris throughout interior__AFTER__ Fresh, spotless -1.jpg" alt="Before - Exterior" style="width:100%; height:auto; object-fit:cover;">
+     <p>🚗 Dusty, muddy exterior with water spots and dirt buildup</p>
+    </div>
+    <div class="gallery-item"><span class="gallery-label">AFTER</span>
+     <img src="Images/BEFORE__ Dusty, muddy exterior with water spots and dirt buildup__AFTER_✨ Sparkling clean, showroom shine with mirror-like finish__BEFORE__ Stained seats with dust and debris throughout interior__AFTER__ Fresh, spotless -1.jpg" alt="After - Exterior" style="width:100%; height:auto; object-fit:cover;">
+     <p>✨ Sparkling clean, showroom shine with mirror-like finish</p>
+    </div>
+    <div class="gallery-item"><span class="gallery-label">BEFORE</span>
+     <img src="Images/BEFORE__ Dusty, muddy exterior with water spots and dirt buildup__AFTER_✨ Sparkling clean, showroom shine with mirror-like finish__BEFORE__ Stained seats with dust and debris throughout interior__AFTER__ Fresh, spotless -2.jpg" alt="Before - Interior" style="width:100%; height:auto; object-fit:cover;">
+     <p>💺 Stained seats with dust and debris throughout interior</p>
+    </div>
+    <div class="gallery-item"><span class="gallery-label">AFTER</span>
+     <img src="Images/BEFORE__ Dusty, muddy exterior with water spots and dirt buildup__AFTER_✨ Sparkling clean, showroom shine with mirror-like finish__BEFORE__ Stained seats with dust and debris throughout interior__AFTER__ Fresh, spotless -2.jpg" alt="After - Interior" style="width:100%; height:auto; object-fit:cover;">
+     <p>🌟 Fresh, spotless interior with deep-cleaned upholstery</p>
+    </div>
+    <div class="gallery-item"><span class="gallery-label">BEFORE</span>
+     <img src="Images/BEFORE__ Dusty, muddy exterior with water spots and dirt buildup__AFTER_✨ Sparkling clean, showroom shine with mirror-like finish__BEFORE__ Stained seats with dust and debris throughout interior__AFTER__ Fresh, spotless .jpg" alt="Before - Engine" style="width:100%; height:auto; object-fit:cover;">
+     <p>🔧 Greasy engine bay with accumulated grime</p>
+    </div>
+    <div class="gallery-item"><span class="gallery-label">AFTER</span>
+     <img src="Images/BEFORE__ Dusty, muddy exterior with water spots and dirt buildup__AFTER_✨ Sparkling clean, showroom shine with mirror-like finish__BEFORE__ Stained seats with dust and debris throughout interior__AFTER__ Fresh, spotless .jpg" alt="After - Engine" style="width:100%; height:auto; object-fit:cover;">
+     <p>💎 Clean engine compartment, degreased and detailed</p>
+    </div>
+
+     <!-- Video showcase (more items added) -->
+     <div class="gallery-item"><span class="gallery-label">VIDEO</span>
+      <div class="video-wrapper">
+        <video controls preload="metadata">
+          <source src="Images/VID-20251118-WA0039.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <img class="video-logo" src="Images/TWO STAR CAR WASH LOGO-1 (2)/TWO STAR CAR WASH LOGO-1-1.png" alt="logo" />
+      </div>
+      <p class="text-sm">Before → After exterior transformation</p>
+     </div>
+
+      <div class="gallery-item"><span class="gallery-label">BEFORE</span>
+       <img src="Images/BEFORE_Before - Exterior__ Dusty, muddy exterior with water spots and dirt buildup__AFTER_After - Exterior_✨ Sparkling clean, showroom shine with mirror-like finish__BEFORE_Before - Interior__ Stained seats with dust and debris throughout interior_.jpg" alt="Before - Alt Exterior" style="width:100%; height:auto; object-fit:cover;">
+       <p>🚗 Additional before exterior</p>
+      </div>
+      <div class="gallery-item"><span class="gallery-label">AFTER</span>
+       <img src="Images/BEFORE_Before - Exterior__ Dusty, muddy exterior with water spots and dirt buildup__AFTER_After - Exterior_✨ Sparkling clean, showroom shine with mirror-like finish__BEFORE_Before - Interior__ Stained sth dust and debris throughout interior_.jpg" alt="After - Alt Interior" style="width:100%; height:auto; object-fit:cover;">
+       <p>🌟 Additional after interior</p>
+      </div>
+
+     <div class="gallery-item"><span class="gallery-label">VIDEO</span>
+      <div class="video-wrapper">
+        <video controls preload="metadata">
+          <source src="Images/VID-20251118-WA0043.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <img class="video-logo" src="Images/TWO STAR CAR WASH LOGO-1 (2)/TWO STAR CAR WASH LOGO-1-1.png" alt="logo" />
+      </div>
+      <p class="text-sm">Interior deep clean showcase</p>
+     </div>
+
+     <div class="gallery-item"><span class="gallery-label">VIDEO</span>
+      <div class="video-wrapper">
+        <video controls preload="metadata">
+          <source src="Images/VID-20251118-WA0049.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <img class="video-logo" src="Images/TWO STAR CAR WASH LOGO-1 (2)/TWO STAR CAR WASH LOGO-1-1.png" alt="logo" />
+      </div>
+      <p class="text-sm">Engine bay degreasing demo</p>
+     </div>
+
+     <div class="gallery-item"><span class="gallery-label">VIDEO</span>
+      <div class="video-wrapper">
+        <video controls preload="metadata">
+          <source src="Images/VID-20251118-WA0055.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <img class="video-logo" src="Images/TWO STAR CAR WASH LOGO-1 (2)/TWO STAR CAR WASH LOGO-1-1.png" alt="logo" />
+      </div>
+      <p class="text-sm">Premium package time-lapse</p>
+     </div>
+
+     <div class="gallery-item"><span class="gallery-label">VIDEO</span>
+      <div class="video-wrapper">
+        <video controls preload="metadata">
+          <source src="Images/VID-20251118-WA0073.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <img class="video-logo" src="Images/TWO STAR CAR WASH LOGO-1 (2)/TWO STAR CAR WASH LOGO-1-1.png" alt="logo" />
+      </div>
+      <p class="text-sm">Wax &amp; polish demo</p>
+     </div>
+
+     <div class="gallery-item"><span class="gallery-label">VIDEO</span>
+      <div class="video-wrapper">
+        <video controls preload="metadata">
+          <source src="Images/VID-20251118-WA0088.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <img class="video-logo" src="Images/TWO STAR CAR WASH LOGO-1 (2)/TWO STAR CAR WASH LOGO-1-1.png" alt="logo" />
+      </div>
+      <p class="text-sm">Full detailing time-lapse</p>
+     </div>
+
+     <div class="gallery-item"><span class="gallery-label">VIDEO</span>
+      <div class="video-wrapper">
+        <video controls preload="metadata">
+          <source src="Images/VID-20251118-WA0153.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <img class="video-logo" src="Images/TWO STAR CAR WASH LOGO-1 (2)/TWO STAR CAR WASH LOGO-1-1.png" alt="logo" />
+      </div>
+      <p class="text-sm">Customer drop-off & service flow</p>
+     </div>
+
+    </div>
+   </section><!-- Testimonials -->
+   <section class="testimonials-section">
+    <h2 class="section-title" id="testimonials-title">What Our Customers Say</h2>
+    <div class="testimonials-grid">
+     <div class="testimonial-card">
+      <div class="stars">
+       ⭐⭐⭐⭐⭐
+      </div>
+      <p class="testimonial-text">Excellent service! My car looks brand new. The team is professional and the premium package is worth every shilling. Highly recommend!</p>
+      <p class="testimonial-author">- John Mwanza</p>
+     </div>
+     <div class="testimonial-card">
+      <div class="stars">
+       ⭐⭐⭐⭐⭐
+      </div>
+      <p class="testimonial-text">Best car wash in Dar es Salaam! They pay attention to every detail. The interior cleaning was amazing. Will definitely come back.</p>
+      <p class="testimonial-author">- Grace Kimaro</p>
+     </div>
+     <div class="testimonial-card">
+      <div class="stars">
+       ⭐⭐⭐⭐⭐
+      </div>
+      <p class="testimonial-text">Very impressed with the engine wash service. Professional staff and reasonable prices. My car runs smoother now. 5 stars!</p>
+      <p class="testimonial-author">- Ahmed Hassan</p>
+     </div>
+     <div class="testimonial-card">
+      <div class="stars">
+       ⭐⭐⭐⭐⭐
+      </div>
+      <p class="testimonial-text">Outstanding! The wax and polish made my car shine like never before. Great customer service and fast turnaround time.</p>
+      <p class="testimonial-author">- Mary Ngowi</p>
+     </div>
+    </div>
+   </section><!-- Contact Section -->
+   <section class="contact-section" id="contact">
+    <h2 class="section-title">Get In Touch</h2>
+    <div class="contact-grid">
+     <div class="contact-card">
+      <div class="contact-icon">
+       📍
+      </div>
+      <h3>Location</h3>
+      <p id="contact-location">Dar es salaam, Tanzania Puma kibugumo kigamboni, Oomco mbagala, Oilcom Near Utumishi house, Mikwambe Mbuyuni</p>
+     </div>
+    <div class="contact-card">
+     <div class="contact-icon">
+      📞
+     </div>
+     <h3>Phone</h3>
+    <p><a href="tel:+255713366464" class="contact-link" id="contact-phone">0713366464</a></p>
+    </div>
+    <div class="contact-card">
+     <div class="contact-icon">
+      💬
+     </div>
+     <h3>WhatsApp</h3>
+    <p><a href="https://wa.me/255713366464" target="_blank" rel="noopener noreferrer" class="contact-link" id="contact-whatsapp">0713366464</a></p>
+    </div>
+     <div class="contact-card">
+      <div class="contact-icon">
+       🕒
+      </div>
+      <h3>Opening Hours</h3>
+      <p id="contact-hours">Mon-Sat: 8AM-6PM<br>
+       Sun: 9AM-4PM</p>
+     </div>
+    </div>
+    <div style="margin-top: 3rem;">
+     <div class="map-container" style="width:100%; max-width:900px;">
+      <iframe
+        src="https://maps.google.com/maps?q=Dar%20es%20salaam%2C%20Tanzania%20Puma%20kibugumo%20kigamboni%2C%20Oomco%20mbagala%2C%20Oilcom%20Near%20Utumishi%20house%2C%20Mikwambe%20Mbuyuni&t=&z=13&ie=UTF8&iwloc=&output=embed"
+        width="100%"
+        height="350"
+        style="border:0;"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+     </div>
+    </div>
+   </section><!-- Footer -->
+   <footer class="footer">
+    <p>© 2024 <span id="footer-company-name">2 Star Car Wash &amp; Services</span>. All rights reserved.</p>
+    <p>Professional Car Care Services in Tanzania</p>
+   </footer>
+  </div>
+  <!-- Fixed Bottom Booking Bar -->
+  <div id="bottomBookingBar" class="bottom-booking-bar" aria-hidden="true">
+    <div class="bar-inner" role="region" aria-label="Booking bar">
+      <div class="bar-summary">Service: <span id="barServiceName">-</span> • <span id="barServicePrice">TZS 0</span></div>
+      <button id="barConfirmBtn" class="bar-confirm-btn">Confirm Booking</button>
+    </div>
+  </div>
+  <script>
+    let currentRecordCount = 0;
+
+    // ensure global defaultConfig exists (do not redeclare variable to avoid duplicate declaration errors)
+    if (typeof window.defaultConfig === 'undefined') {
+      window.defaultConfig = {
+        background_color: "#f5f7fa",
+        surface_color: "#ffffff",
+        text_color: "#0f2027",
+        primary_action_color: "#ef4444",
+        secondary_action_color: "#3b82f6",
+        font_family: "Segoe UI",
+        font_size: 16,
+        company_name: "2 Star Car Wash & Services",
+        tagline: "Professional Car Wash & Auto Care in Tanzania",
+        service_heading: "Our Premium Services",
+        booking_heading: "Book Your Service",
+        gallery_heading: "Our Work",
+        testimonial_heading: "What Our Customers Say",
+        location_text: "Dar es salaam, Tanzania Puma kibugumo kigamboni, Oomco mbagala, Oilcom Near Utumishi house, Mikwambe Mbuyuni",
+        phone_number: "+25571336464",
+        whatsapp_number: "+25571336464",
+        hours_text: "Mon-Sat: 8AM-6PM, Sun: 9AM-4PM"
+      };
+    }
+
+    async function onConfigChange(config) {
+      const backgroundColor = config.background_color || window.defaultConfig.background_color;
+      const surfaceColor = config.surface_color || window.defaultConfig.surface_color;
+      const textColor = config.text_color || window.defaultConfig.text_color;
+      const primaryColor = config.primary_action_color || window.defaultConfig.primary_action_color;
+      const secondaryColor = config.secondary_action_color || window.defaultConfig.secondary_action_color;
+      const fontFamily = config.font_family || window.defaultConfig.font_family;
+      const fontSize = config.font_size || window.defaultConfig.font_size;
+
+      // Apply background
+      document.body.style.background = `linear-gradient(135deg, ${backgroundColor} 0%, ${adjustColor(backgroundColor, -10)} 100%)`;
+
+      // Apply font
+      document.body.style.fontFamily = `${fontFamily}, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif`;
+
+      // Apply font sizes
+      document.body.style.fontSize = `${fontSize}px`;
+      document.querySelectorAll('.section-title').forEach(el => {
+        el.style.fontSize = `${fontSize * 2.5}px`;
+        el.style.color = textColor;
+      });
+      document.querySelectorAll('h1').forEach(el => {
+        el.style.fontSize = `${fontSize * 3}px`;
+      });
+      document.querySelectorAll('h2').forEach(el => {
+        el.style.fontSize = `${fontSize * 1.8}px`;
+      });
+      document.querySelectorAll('h3').forEach(el => {
+        el.style.fontSize = `${fontSize * 1.5}px`;
+      });
+      document.querySelectorAll('h4').forEach(el => {
+        el.style.fontSize = `${fontSize * 1.2}px`;
+      });
+      document.querySelectorAll('p, label, input, select').forEach(el => {
+        el.style.fontSize = `${fontSize}px`;
+      });
+
+      // Apply colors
+      document.querySelectorAll('.service-card').forEach(el => {
+        el.style.background = surfaceColor;
+      });
+      document.querySelectorAll('.service-card h3').forEach(el => {
+        el.style.color = textColor;
+      });
+      document.querySelectorAll('.compact-service-card').forEach(el => {
+        el.style.background = `rgba(255, 255, 255, 0.95)`;
+      });
+      document.querySelectorAll('.compact-service-card h4').forEach(el => {
+        el.style.color = textColor;
+      });
+      document.querySelectorAll('.btn-primary').forEach(el => {
+        el.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${adjustColor(primaryColor, -10)} 100%)`;
+      });
+      document.querySelectorAll('.btn-secondary').forEach(el => {
+        el.style.background = `linear-gradient(135deg, ${secondaryColor} 0%, ${adjustColor(secondaryColor, -10)} 100%)`;
+      });
+      document.querySelectorAll('.btn-small').forEach(el => {
+        el.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${adjustColor(primaryColor, -10)} 100%)`;
+      });
+      document.querySelectorAll('.submit-btn').forEach(el => {
+        el.style.background = `linear-gradient(135deg, ${secondaryColor} 0%, ${adjustColor(secondaryColor, -10)} 100%)`;
+      });
+      document.querySelectorAll('.price').forEach(el => {
+        el.style.color = primaryColor;
+      });
+      document.querySelectorAll('.contact-link').forEach(el => {
+        el.style.color = secondaryColor;
+      });
+
+      // Apply text content
+      const companyName = config.company_name || window.defaultConfig.company_name;
+      document.getElementById('nav-company-name').textContent = companyName;
+      document.getElementById('hero-company-name').textContent = companyName;
+      document.getElementById('footer-company-name').textContent = companyName;
+      
+      document.getElementById('hero-tagline').textContent = config.tagline || window.defaultConfig.tagline;
+      document.getElementById('top-services-title').textContent = config.service_heading || window.defaultConfig.service_heading;
+      document.getElementById('all-services-title').textContent = config.service_heading || window.defaultConfig.service_heading;
+      document.getElementById('booking-title').textContent = config.booking_heading || window.defaultConfig.booking_heading;
+      document.getElementById('gallery-title').textContent = config.gallery_heading || window.defaultConfig.gallery_heading;
+      document.getElementById('testimonials-title').textContent = config.testimonial_heading || window.defaultConfig.testimonial_heading;
+      
+      document.getElementById('contact-location').textContent = config.location_text || window.defaultConfig.location_text;
+      document.getElementById('contact-phone').textContent = config.phone_number || window.defaultConfig.phone_number;
+      document.getElementById('contact-phone').href = `tel:${config.phone_number || window.defaultConfig.phone_number}`;
+      document.getElementById('contact-whatsapp').textContent = config.whatsapp_number || window.defaultConfig.whatsapp_number;
+      document.getElementById('contact-whatsapp').href = `https://wa.me/${(config.whatsapp_number || window.defaultConfig.whatsapp_number).replace(/\D/g, '')}`;
+      document.getElementById('contact-hours').innerHTML = (config.hours_text || window.defaultConfig.hours_text).replace(/,/g, '<br>');
+    }
+
+    function adjustColor(color, percent) {
+      const num = parseInt(color.replace("#",""), 16);
+      const amt = Math.round(2.55 * percent);
+      const R = (num >> 16) + amt;
+      const G = (num >> 8 & 0x00FF) + amt;
+      const B = (num & 0x0000FF) + amt;
+      return "#" + (0x1000000 + (R<255?R<1?0:R:255)*0x10000 + (G<255?G<1?0:G:255)*0x100 + (B<255?B<1?0:B:255)).toString(16).slice(1);
+    }
+
+    const dataHandler = {
+      onDataChanged(data) {
+        currentRecordCount = data.length;
+      }
+    };
+
+    async function initializeApp() {
+      if (window.dataSdk) {
+        const initResult = await window.dataSdk.init(dataHandler);
+        if (!initResult.isOk) {
+          console.error("Failed to initialize data SDK");
+        }
+      }
+
+      if (window.elementSdk) {
+        window.elementSdk.init({
+          defaultConfig: window.defaultConfig,
+          onConfigChange,
+          mapToCapabilities: (config) => ({
+            recolorables: [
+              {
+                get: () => config.background_color || window.defaultConfig.background_color,
+                set: (value) => {
+                  config.background_color = value;
+                  window.elementSdk.setConfig({ background_color: value });
+                }
+              },
+              {
+                get: () => config.surface_color || window.defaultConfig.surface_color,
+                set: (value) => {
+                  config.surface_color = value;
+                  window.elementSdk.setConfig({ surface_color: value });
+                }
+              },
+              {
+                get: () => config.text_color || window.defaultConfig.text_color,
+                set: (value) => {
+                  config.text_color = value;
+                  window.elementSdk.setConfig({ text_color: value });
+                }
+              },
+              {
+                get: () => config.primary_action_color || window.defaultConfig.primary_action_color,
+                set: (value) => {
+                  config.primary_action_color = value;
+                  window.elementSdk.setConfig({ primary_action_color: value });
+                }
+              },
+              {
+                get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+                set: (value) => {
+                  config.secondary_action_color = value;
+                  window.elementSdk.setConfig({ secondary_action_color: value });
+                }
+              }
+            ],
+            borderables: [],
+            fontEditable: {
+                get: () => config.font_family || window.defaultConfig.font_family,
+              set: (value) => {
+                config.font_family = value;
+                window.elementSdk.setConfig({ font_family: value });
+              }
+            },
+            fontSizeable: {
+              get: () => config.font_size || defaultConfig.font_size,
+              set: (value) => {
+                config.font_size = value;
+                window.elementSdk.setConfig({ font_size: value });
+              }
+            }
+          }),
+          mapToEditPanelValues: (config) => new Map([
+            ["company_name", config.company_name || defaultConfig.company_name],
+            ["tagline", config.tagline || defaultConfig.tagline],
+            ["service_heading", config.service_heading || defaultConfig.service_heading],
+            ["booking_heading", config.booking_heading || defaultConfig.booking_heading],
+            ["gallery_heading", config.gallery_heading || defaultConfig.gallery_heading],
+            ["testimonial_heading", config.testimonial_heading || defaultConfig.testimonial_heading],
+            ["location_text", config.location_text || defaultConfig.location_text],
+            ["phone_number", config.phone_number || defaultConfig.phone_number],
+            ["whatsapp_number", config.whatsapp_number || defaultConfig.whatsapp_number],
+            ["hours_text", config.hours_text || defaultConfig.hours_text]
+          ])
+        });
+      }
+
+      // Bottom booking bar: sync and spacing
+      function updateBottomBarSpacing(){
+        const bar = document.getElementById('bottomBookingBar');
+        const bookingContainer = document.querySelector('.booking-container');
+        if (!bar || !bookingContainer) return;
+        const inner = bar.querySelector('.bar-inner');
+        const height = inner ? inner.offsetHeight + 24 : 84; // safe default
+        // add padding to booking container to avoid overlap
+        bookingContainer.style.paddingBottom = `${height}px`;
+        document.body.classList.add('booking-has-bottom-bar');
+        bar.setAttribute('aria-hidden','false');
+        bar.classList.add('show');
+      }
+
+      function syncBottomBarWithForm(){
+        const sel = document.getElementById('serviceSelect');
+        const nameEl = document.getElementById('barServiceName');
+        const priceEl = document.getElementById('barServicePrice');
+        if (!sel) return;
+        const selected = sel.options[sel.selectedIndex];
+        const svc = selected ? selected.value : '';
+        nameEl.textContent = svc || '-';
+        const prices = window.SERVICE_PRICES || {};
+        const price = prices[svc] || 0;
+        priceEl.textContent = `TZS ${Number(price || 0).toLocaleString()}`;
+      }
+
+      // Wire confirm button to submit booking form
+      document.addEventListener('DOMContentLoaded', () => {
+        // Ensure bar spacing runs after layout
+        setTimeout(() => updateBottomBarSpacing(), 120);
+        window.addEventListener('resize', () => updateBottomBarSpacing());
+
+        const sel = document.getElementById('serviceSelect');
+        if (sel) sel.addEventListener('change', syncBottomBarWithForm);
+        // initial sync
+        setTimeout(syncBottomBarWithForm, 200);
+
+        const barBtn = document.getElementById('barConfirmBtn');
+        if (barBtn) {
+          barBtn.addEventListener('click', (e) => {
+            const form = document.getElementById('bookingForm');
+            if (!form) return;
+            // prefer requestSubmit when available for better behavior
+            if (typeof form.requestSubmit === 'function') {
+              form.requestSubmit();
+            } else {
+              // fallback: trigger click on hidden submit
+              const realSubmit = document.getElementById('submitBtn');
+              if (realSubmit) realSubmit.click(); else form.submit();
+            }
+          });
+        }
+      });
+    }
+
+    function scrollToBooking(serviceName) {
+      const bookingSection = document.getElementById('booking');
+      bookingSection.scrollIntoView({ behavior: 'smooth' });
+      
+      if (serviceName) {
+          setTimeout(() => {
+            const sel = document.getElementById('serviceSelect');
+            if (sel) sel.value = serviceName;
+          }, 500);
+      }
+    }
+const API_ENDPOINT = 'api/booking.php'; // or 'api/booking_test.php' for quick local tests
+
+// keep recent bookings in memory (temporary client-side storage for the session)
+let bookingsHistory = [];
+
+// simple HTML-escape helper
+function escapeHtml(str){
+  return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+}
+
+// ensure the result container exists (create and insert after the form if missing)
+function ensureResultContainer(formEl){
+  let rc = document.getElementById('bookingResult');
+  if(!rc){
+    rc = document.createElement('div');
+    rc.id = 'bookingResult';
+    rc.className = 'mt-4 p-4 border rounded bg-green-50 text-green-800';
+    rc.style.display = 'none';
+    formEl.parentNode.insertBefore(rc, formEl.nextSibling);
+  }
+  return rc;
+}
+
+document.getElementById('bookingForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const form = e.currentTarget;
+  const submitBtn = document.getElementById('submitBtn');
+  const msg = document.getElementById('successMessage');
+  const originalText = submitBtn.textContent;
+
+  // UI feedback
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Processing...';
+  msg.classList.remove('show');
+  msg.style.background = '';
+
+  // Collect form data (requires proper name attributes on inputs)
+  const fd = new FormData(form);
+
+  // Optional: attach amount (uses shared SERVICE_PRICES from js/config.js)
+  const SERVICE_PRICES = window.SERVICE_PRICES || {
+    'Exterior Wash': 10000,
+    'Full Body Wash': 15000,
+    'Engine Wash': 20000,
+    'Interior Vacuum': 12000
+  };
+  const svc = fd.get('service');
+  if (SERVICE_PRICES[svc] !== undefined) fd.set('amount', SERVICE_PRICES[svc]);
+
+  try {
+    const res = await fetch(API_ENDPOINT, { method: 'POST', body: fd });
+
+    // Always parse text first and try to parse JSON to detect errors
+    const text = await res.text();
+    let data;
+    try { data = JSON.parse(text); } catch (err) { throw new Error('Invalid JSON response from server'); }
+
+    // Handle HTTP-level errors and validation errors (400)
+    if (!res.ok) {
+      if (res.status === 400 && data && data.errors) {
+        const errs = Array.isArray(data.errors) ? data.errors.join('; ') : (data.message || 'Validation failed');
+        msg.textContent = '❌ ' + errs;
+        msg.style.background = 'red';
+        msg.classList.add('show');
+        return;
+      }
+      throw new Error(data.message || `Server error: ${res.status}`);
+    }
+
+    // Application-level handling (robust, works with mock or DB-backed responses)
+    const resultContainer = ensureResultContainer(form);
+
+    // Normalize booking result from different API shapes
+    let booked = null;
+    if (data && data.success) {
+      booked = data.data || data.booking || (data.booking_id || data.id ? { id: data.booking_id || data.id, name: data.name, service: data.service, date: data.date, time: data.time, amount: data.amount } : null);
+    } else if (res.ok && data) {
+      // sometimes API returns the created booking directly (no success flag)
+      if (data.id || data.booking_date || data.booking_time || data.name) {
+        booked = {
+          id: data.id || data.booking_id,
+          name: data.name || fd.get('name'),
+          service: data.service || fd.get('service'),
+          date: data.date || fd.get('date'),
+          time: data.time || fd.get('time'),
+          amount: data.amount || fd.get('amount')
+        };
+      }
+    }
+
+    if (booked) {
+      // push to local session history and render all bookings
+      bookingsHistory.push(booked);
+      resultContainer.style.display = '';
+      resultContainer.innerHTML = `
+        <p><strong>Booking successful!</strong></p>
+        <ul>
+          ${bookingsHistory.map(b => `<li>${escapeHtml(b.name||'')} — ${escapeHtml(b.service||'')} — ${escapeHtml(b.date||'')} ${escapeHtml(b.time||'')}</li>`).join('\n')}
+        </ul>
+      `;
+
+      if (msg) {
+        msg.textContent = data.message || '✅ Booking confirmed!';
+        msg.style.background = 'green';
+        msg.classList.add('show');
+      }
+      form.reset();
+    } else {
+      resultContainer.style.display = '';
+      resultContainer.innerHTML = `<p class="text-red-600">Error: ${escapeHtml(data && data.message ? data.message : 'Booking failed')}</p>`;
+      const errMsg = data && (data.message || (data.errors ? (Array.isArray(data.errors) ? data.errors.join('; ') : data.errors) : 'Booking failed'));
+      if (msg) {
+        msg.textContent = '❌ ' + errMsg;
+        msg.style.background = 'red';
+        msg.classList.add('show');
+      }
+    }
+  } catch (err) {
+    msg.textContent = '❌ Booking failed. ' + (err.message || 'Network error');
+    msg.style.background = 'red';
+    msg.classList.add('show');
+    console.error(err);
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalText;
+    setTimeout(() => msg.classList.remove('show'), 6000);
+  }
+});
+
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+    // populate services dropdown from API
+    (function loadServices(){
+      fetch('/api/get_services.php')
+        .then(res => res.json())
+        .then(services => {
+          const select = document.getElementById('serviceSelect');
+          if (!select || !Array.isArray(services)) return;
+
+          // build price map and populate global SERVICE_PRICES
+          const priceMap = {};
+          services.forEach(s => {
+            priceMap[s.name] = Number(s.price) || 0;
+            const opt = document.createElement('option');
+            opt.value = s.name;
+            opt.textContent = `${s.name} - TZS ${s.price}`;
+            select.appendChild(opt);
+          });
+          window.SERVICE_PRICES = priceMap;
+
+          // update any visible price labels marked with data-service
+          document.querySelectorAll('.service-price').forEach(el => {
+            const svc = el.dataset.service;
+            if (!svc) return;
+            const p = priceMap[svc];
+            if (p !== undefined) {
+              // format with commas
+              const formatted = p.toLocaleString();
+              const amtEl = el.querySelector('.price-amount');
+              if (amtEl) amtEl.textContent = formatted;
+              else el.textContent = 'TZS ' + formatted;
+            }
+          });
+        })
+        .catch(err => console.error('Failed to load services', err));
+    })();
+
+    initializeApp();
+    
+  </script>
+  <div class="site-logo-sticky" aria-hidden="true">
+    <img src="Images/TWO STAR CAR WASH LOGO-1 (2)/TWO STAR CAR WASH LOGO-1-1.png" alt="TWO STAR CAR WASH" />
+  </div>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9aa01772b61b25c1',t:'MTc2NTA2OTI4NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

@@ -1,0 +1,16 @@
+<?php
+// Example secure config to place outside webroot, e.g. /var/www/secure/config.php
+// Copy this file to a location outside the webroot and edit values, or set environment variables.
+
+// You can keep these as constants or override via getenv in production
+$DB_HOST = getenv('DB_HOST') ?: '127.0.0.1';
+$DB_NAME = getenv('DB_NAME') ?: 'carwash';
+$DB_USER = getenv('DB_USER') ?: 'staruser';
+$DB_PASS = getenv('DB_PASS') ?: 'StrongPassword123';
+
+$ADMIN_KEY = getenv('ADMIN_KEY') ?: 'REPLACE_WITH_STRONG_ADMIN_KEY';
+
+// Example: place this file at /var/www/secure/config.php and ensure PHP has read access
+// Make sure the file is not readable by other users and not committed to version control.
+
+?>

@@ -1,0 +1,23 @@
+REQUEST 
+Array
+(
+    [name] => manoh
+    [phone] => +255719037557
+    [car_model] => Toyota 
+    [service] => Normal Wash
+    [booking_date] => 2025-12-30
+    [time] => 05:41
+    [amount] => 15000
+)
+
+POST
+Array
+(
+    [name] => manoh
+    [phone] => +255719037557
+    [car_model] => Toyota 
+    [service] => Normal Wash
+    [booking_date] => 2025-12-30
+    [time] => 05:41
+    [amount] => 15000
+)
