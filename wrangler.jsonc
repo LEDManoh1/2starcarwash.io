@@ -1,0 +1,14 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "2starcarwash",
+  "compatibility_date": "2026-04-21",
+  "observability": {
+    "enabled": true
+  },
+  "assets": {
+    "directory": "Admin"
+  },
+  "compatibility_flags": [
+    "nodejs_compat"
+  ]
+}
